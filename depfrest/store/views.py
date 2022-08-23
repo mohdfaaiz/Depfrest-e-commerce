@@ -1,6 +1,4 @@
 
-
-from multiprocessing import context
 from django.shortcuts import render,get_object_or_404
 
 from . models import Product
@@ -62,3 +60,4 @@ def search(request):
         'product_count':product_count,
     }
     return render(request,'store/store.html',context)
+

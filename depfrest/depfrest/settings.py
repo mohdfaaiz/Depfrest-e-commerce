@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'category',
     'store',
     'carts',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -157,3 +158,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'depfrest@gmail.com'
 EMAIL_HOST_PASSWORD = 'motr qcoj noae xyyc'
 EMAIL_USE_TLS = True
+
+
+RAZOR_KEY_ID = 'rzp_test_E7IUnz0Ne1fKWc'
+RAZOR_KEY_SECRET = 'eEl1f24rAizFWwbN9Ljv8kJ7'
