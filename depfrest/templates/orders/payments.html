@@ -48,13 +48,12 @@
                           <figcaption class="info">
                               <a href="{{cart_item.product.get_url}}" class="title text-dark">{{cart_item.product.product_name}}</a>
                               <p class="text-muted small">
-                                  {% if cart_item.variation.all %}
-                                  {% for item in cart_item.variation.all %}
-                                  {{item.variation_category | capfirst}} : {{item.variation_value}} <br>
-                                  {% endfor %}
-                                 
-                                  {% endif %}
-                              </p>
+                                {% if item.variations.all %}
+                                    {% for i in item.variations.all %}
+                                        {{ i.variation_category }} : {{ i.variation_value }} <br>
+                                    {% endfor %}
+                                {% endif %}
+                            </p>
                           </figcaption>
                       </figure>
                   </td>

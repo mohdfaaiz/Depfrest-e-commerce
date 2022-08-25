@@ -1,6 +1,9 @@
 
+from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import redirect, render,get_object_or_404
+
+
 
 
 from .forms import RegistrationForm,UserForm,UserProfileForm
@@ -9,6 +12,9 @@ from django.contrib import messages,auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views.decorators.cache import never_cache
+from orders.models import Order,OrderProduct
+from store . models import Variation
+
 
 
 
@@ -23,6 +29,7 @@ from django.core.mail import EmailMessage
 from carts.views import _cart_id
 from carts.models import Cart,CartItem
 import requests
+
 
 # Create your views here.
 
@@ -153,7 +160,15 @@ def activate(request,uidb64, token):
     
 @login_required(login_url ="login")
 def dashboard(request):
-    return render(request,'accounts/dashboard.html')
+    orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
+    orders_count = orders.count()
+    
+    userprofile = UserProfile.objects.get(user_id=request.user.id)
+    context = {
+        'orders_count' : orders_count,
+        'userprofile':userprofile
+    }
+    return render(request,'accounts/dashboard.html',context)
 
 def forgotPassword(request):
     if request.method == "POST":
@@ -216,6 +231,7 @@ def resetPassword(request):
     else:
         return render(request,'accounts/resetPassword.html')
     
+@login_required(login_url='login')
 def edit_profile(request):
     userprofile = get_object_or_404(UserProfile,user = request.user)
     if request.method == "POST":
@@ -235,3 +251,64 @@ def edit_profile(request):
         'userprofile':userprofile,
     }
     return render(request,'accounts/edit_profile.html',context)
+
+@login_required(login_url='login')
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')
+    context = {
+        'orders' : orders,
+    }
+    return render(request,'accounts/my_orders.html',context)
+
+
+@login_required(login_url='login')
+def change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST['current_password']
+        new_password     = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+        
+        user = Account.objects.get(username__exact=request.user.username)
+        
+        if new_password == confirm_password:
+            success = user.check_password(current_password)
+            if success:
+                user.set_password(new_password)
+                user.save()
+                # auth.logout(request)
+                messages.success(request,'Password Updated Successfully.')
+                return redirect('change_password')
+            else:
+                messages.error(request,'Please Enter Valid Password')
+                return redirect('change_password')
+        else:
+            messages.error(request,'Password Does not Match')
+            return redirect('change_password')
+    return render(request,'accounts/change_password.html')
+
+@login_required(login_url='login')
+def order_detail(request,order_id):
+    order_detail =  OrderProduct.objects.filter(order__order_number=order_id)   
+    order = Order.objects.get(order_number=order_id)
+    
+    total = 0
+    tax = 0
+    grand_total = 0
+    for i in order_detail:
+        total += i.product_price * i.quantity
+        
+    tax = 2*total / 100
+    grand_total = total + tax
+
+    
+    # variations = Variation.objects.filter(variation_category=variation_category,variation_value=variation_value)
+    context = {
+        'order_detail' : order_detail,
+        'order' : order, 
+        
+        'total':total,
+        'tax':tax,
+        'grand_total':grand_total
+
+    }
+    return render(request,'accounts/order_detail.html',context)
