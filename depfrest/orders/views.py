@@ -140,11 +140,10 @@ def payment_status(request):
           'domain' : current_site,
           
       })
-
       to_email = order.user.email
       send_email = EmailMessage(mail_subject,  message, to=[to_email])
       send_email.send()
-      
+       
       
       return redirect('payment_success')
     
@@ -210,7 +209,6 @@ def payment_success(request):
 
   try:
     order = Order.objects.get(order_number=order_number,is_ordered=True)
-
     # when payment is success
     order.status = "Accepted"
     order.save()

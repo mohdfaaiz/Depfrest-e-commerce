@@ -47,9 +47,9 @@
                                 <div class="well">
                                     <ul class="list-unstyled mb0">
                                         <li><strong>Order</strong> #{{order.order_number}}</li>
-                                        <li><strong>Transaction</strong> #{{transation_id}}</li>
+                                        <li><strong>Transaction</strong> #{{transation_id.payment_id}}</li>
                                         <li><strong>Order Date:</strong>{{order.created_at}}</li>
-                                        <li><strong>Status:</strong>{{payment.staus}}</li>
+                                        <li><strong>Status:</strong>{{payment.status}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -67,7 +67,8 @@
                                         <tbody>
                                             {% for order_product in ordered_products %}
                                             <tr>
-                                                <td>{{order_product.product}}</td>                               
+                                                <td>{{order_product.product}}</td>  
+                                                                        
                                                 <td class="text-center">{{order_product.quantity}}</td>
                                                 <td class="text-center">₹ {{order_product.product_price}}</td>
                                             </tr>
@@ -100,7 +101,7 @@
                     <!-- End .row -->
                 </div>
             </div>
-            <!-- End .panel -->
+            <!-- End .panel --> 
         </div>
         <!-- col-lg-12 end here -->
     </div>

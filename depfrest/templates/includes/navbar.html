@@ -60,7 +60,16 @@
                     <!-- col.// -->
                     <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
                         <div class="d-flex justify-content-end mb-3 mb-lg-0">
-                            {% if user.id is not None %}
+                            {% if request.user.is_superadmin %}
+                                <div class="widget-header">
+                                    <small class="title text-muted">Welcome {{ user.first_name }}</small>
+                                    <div>
+                                        <a href="{% url 'manager_dashboard' %}">Dashboard</a> <span class="dark-transp">|</span>
+                                        <a href="{% url 'logout' %}">Logout</a>
+                                    </div>
+                                </div>
+
+                            {% elif request.user.is_authenticated %}
                                 <div class="widget-header">
                                     <small class="title text-muted">Welcome {{ user.first_name }}</small>
                                     <div>
