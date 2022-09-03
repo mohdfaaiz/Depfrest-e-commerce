@@ -48,6 +48,7 @@ def register(request):
             user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username,password=password)
             user.phone_number = phone_number
             user.save()
+            messages.success(request,'Thank you for registering with us,we have sent an verification email to your email address.Please verify it. ')
             
             # USER ACTIVATION
             current_site =  get_current_site(request)
@@ -61,7 +62,7 @@ def register(request):
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
-            # messages.success(request,'Thank you for registering with us,we have sent an verification email to your email address.Please verify it. ')
+           
             return redirect('/accounts/login/?command=verification&email='+email)
     else:
         form = RegistrationForm()
@@ -119,7 +120,7 @@ def login(request):
             except:
                 pass
             auth.login(request,user)
-            messages.success(request,'You Are Now Logged in.')
+
             url = request.META.get('HTTP_REFERER')
             try:
                 query = requests.utils.urlparse(url).query
@@ -152,6 +153,19 @@ def activate(request,uidb64, token):
     if user is not None and default_token_generator.check_token(user,token):
         user.is_active = True
         user.save()
+        
+        # User Profile generation
+        userprofile = UserProfile(
+            user = user,
+            address_line_1 = 'change this',
+            address_line_2 = 'change this',
+            city = 'change this',
+            state = 'change this',
+            country = 'change_this'
+        )
+        
+        userprofile.save()
+        
         messages.success(request,'Congratulations Your account is activated.')
         return redirect('login')
     else:
@@ -312,3 +326,15 @@ def order_detail(request,order_id):
 
     }
     return render(request,'accounts/order_detail.html',context)
+
+@login_required(login_url='login')
+def cancel_order_user(request,order_number):
+    try:
+        order = Order.objects.get(order_number=order_number)
+        order.status = "Cancelled"
+        order.save()
+
+        return redirect('my_orders')
+
+    except Exception as e:
+        raise e

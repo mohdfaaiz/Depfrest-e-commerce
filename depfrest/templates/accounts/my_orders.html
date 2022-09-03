@@ -23,8 +23,10 @@
                                 <th scope="col">Order #</th>
                                 <th scope="col">Billing Name</th>
                                 <th scope="col">Phone Number</th>
-                                <th scope="col">Order Total</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Total</th>
+                                <!-- <th scope="col">Date</th> -->
+                                <th scope="col">Order Status</th>
+                                <th scope="col">Cancel</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -34,7 +36,20 @@
                                 <td>{{ order.full_name }}</td> 
                                 <td>{{ order.phone }}</td>
                                 <td>₹{{ order.order_total }}</td>
-                                <td>{{ order.created_at }}</td>
+                                <!-- <td>{{ order.created_at }}</td> -->
+                                <td>{% if order.status == 'Cancelled' %}
+                                  <span class= text-danger>{{order.status}}</span>
+                                  {% else %}
+                                  {{order.status}}
+                                  {% endif %}
+                               </td>
+                               <td>
+                                  {% if order.status == 'Cancelled' %}
+                                  <button class="btn btn-info disabled">Cancelled</button>
+                                  {% else %}
+                                  <a href="{% url 'cancel_order_user' order.order_number %}" class="btn btn-danger">Cancel</a>
+                                  {% endif %}
+                               </td>
                               </tr>
                             {% endfor %}
                             </tbody>

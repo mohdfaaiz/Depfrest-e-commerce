@@ -210,7 +210,7 @@ def payment_success(request):
   try:
     order = Order.objects.get(order_number=order_number,is_ordered=True)
     # when payment is success
-    order.status = "Accepted"
+    order.status = "Shipped"
     order.save()
 
     ordered_products = OrderProduct.objects.filter(order_id=order.id)

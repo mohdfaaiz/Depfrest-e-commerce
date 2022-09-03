@@ -20,13 +20,18 @@ def manager_dashboard(request):
         user_count = Account.objects.filter(is_superadmin=False).count()
         product_count = Product.objects.all().count()
         order_count = Order.objects.filter(is_ordered=True).count()
-        category_count = Category.objects.all().count
+        category_count = Category.objects.all().count()
+        variation_count = Variation.objects.all().count()
+        admin_order_count = Order.objects.filter(user__is_superadmin=True).count()
+        
 
         context = {
             'user_count': user_count,
             'product_count': product_count,
             'order_count' : order_count,
-            'category_count' : category_count
+            'category_count' : category_count,
+            'variation_count' : variation_count,
+            'admin_order_count' : admin_order_count
         }
 
         return render(request,'manager/manager_dashboard.html',context)
@@ -187,7 +192,7 @@ def manager_cancel_order(request, order_number):
 @login_required(login_url='login')
 def accept_order(request, order_number):
   order = Order.objects.get(order_number=order_number)
-  order.status = 'Accepted'
+  order.status = 'Shipped'
   order.save()
   
   return redirect('order_management')
@@ -197,7 +202,7 @@ def accept_order(request, order_number):
 @login_required(login_url='login')
 def complete_order(request, order_number):
   order = Order.objects.get(order_number=order_number)
-  order.status = 'Completed'
+  order.status = 'Delivered'
   order.save()
   
   return redirect('order_management')

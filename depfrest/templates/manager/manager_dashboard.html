@@ -11,7 +11,7 @@
     <section class="section-conten padding-y bg" style= background-color:white;>
     
     <div class="container ">
-      <h2 class="text-center  text-light mb-5">DASHBOARD</h2>
+      <h2 class="text-center  text-dark mb-5">DASHBOARD</h2>
         <div class="row">
         <aside class="col-md-3">
             <!--   SIDEBAR   -->
@@ -36,7 +36,7 @@
                   <div class="card bg-light">
                     <div class="card-body">
                       <h5 class="card-title">Total Users</h5>
-                      <p class="card-text text-gray-light h3">{{order_count}}</p>
+                      <p class="card-text text-gray-light h3">{{user_count}}</p>
                       <a href="{% url 'user_management' %}" class="btn btn-gray-light">View Users</a>
                     </div>
                   </div>
@@ -45,7 +45,7 @@
                     <div class="card bg-light">
                       <div class="card-body">
                         <h5 class="card-title">Total Products</h5>
-                        <p class="card-text text-gray-light h3">{{user_count}}</p>
+                        <p class="card-text text-gray-light h3">{{product_count}}</p>
                         <a href="{% url 'product_management' %}" class="btn btn-gray-light">View Products</a>
                       </div>
                     </div>
@@ -54,7 +54,7 @@
                     <div class="card bg-light mt-3">
                       <div class="card-body">
                         <h5 class="card-title">Total Orders</h5>
-                        <p class="card-text text-gray-light h3">{{product_count}}</p>
+                        <p class="card-text text-gray-light h3">{{order_count}}</p>
                         <a href="{% url 'order_management' %}" class="btn btn-gray-light">View Orders</a>
                       </div>
                     </div>
@@ -72,7 +72,7 @@
                     <div class="card bg-light mt-3">
                       <div class="card-body">
                         <h5 class="card-title">Total Variations</h5>
-                        <p class="card-text text-gray-light h3">{{variation_value}}</p>
+                        <p class="card-text text-gray-light h3">{{variation_count}}</p>
                         <a href="{% url 'variation_management' %}" class="btn btn-gray-light">View Variations</a>
                       </div>
                     </div>
@@ -81,7 +81,7 @@
                     <div class="card bg-light mt-3">
                       <div class="card-body">
                         <h5 class="card-title">Admin Orders</h5>
-                        <p class="card-text text-gray-light h3">{{admin_orders.count}}</p>
+                        <p class="card-text text-gray-light h3">{{admin_order_count}}</p>
                         <a href="{% url 'admin_orders' %}" class="btn btn-gray-light">View Orders</a>
                       </div>
                     </div>

@@ -58,7 +58,7 @@
               <td>
                 {% if order.status == 'Cancelled' %}
                 <span class="text-danger font-weight-bold">{{ order.status }}</span>
-                {% elif order.status == 'Completed' %}
+                {% elif order.status == 'Delivered' %}
                 <span class="text-success font-weight-bold">{{ order.status }}</span>
                 {% elif order.status == 'Pending' %}
                 <span class="text-muted font-weight-bold">{{ order.status }}</span>
@@ -68,12 +68,12 @@
               <td>
                 {% if order.status == 'Pending' %}
                 <a href="{% url 'accept_order' order.order_number %}" class="btn btn-sm btn-light">Accept</a>
-                {% elif order.status == 'Accepted' %}
+                {% elif order.status == 'Shipped' %}
                 <a href="{% url 'complete_order' order.order_number %}" class="btn btn-sm btn-light">Complete</a>
                 {% endif %}
               </td>
               <td>
-                {% if order.status == 'Pending' or order.status == 'Accepted' %}
+                {% if order.status == 'Pending' or order.status == 'Shipped' %}
                 <a href="{% url 'manager_cancel_order' order.order_number %}" class="btn btn-sm btn-light">Cancel</a>
                 {% endif %}
               </td>
