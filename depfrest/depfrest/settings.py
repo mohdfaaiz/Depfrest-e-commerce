@@ -156,8 +156,8 @@ MESSAGE_TAGS = {
 # SMTP Configuration
 EMAIL_HOST ='smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'depfrest@gmail.com'
-EMAIL_HOST_PASSWORD = 'motr qcoj noae xyyc'
+EMAIL_HOST_USER = 'depfrest1@gmail.com'
+EMAIL_HOST_PASSWORD = 'taku lifa asuh dnuh'
 EMAIL_USE_TLS = True
 
 
