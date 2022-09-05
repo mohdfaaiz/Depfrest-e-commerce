@@ -12,10 +12,10 @@ Bootstrap with custom variables
   --blue: #3167eb;
   --indigo: #6610f2;
   --purple: #6f42c1;
-  --pink: #e83e8c;
+  --pink: #9e3264;
   --red: #fa3434;
   --orange: #ff9017;
-  --yellow: #ffc107;
+  --yellow: #f4ff57;
   --green: #00b517;
   --teal: #20c997;
   --cyan: #17a2b8;
@@ -32,9 +32,9 @@ Bootstrap with custom variables
   --light: #e4e4e4;
   --dark: #212529;
   --primary-light: #5f89f0;
-  --gray: #545454;
-  --gray-light: #969696;
-  --breakpoint-xs: 0;
+  --gray: #ff9595;
+  --gray-light: #000000;
+  --breakpoint-xs: 0; 
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
